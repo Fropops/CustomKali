@@ -20,7 +20,22 @@ Password=$2
 # Setting up Keyboard
 echo -e "${YELLOW}[?] Reconfiguring Keyboard...${NC}"
 setxkbmap fr
-sudo dpkg-reconfigure keyboard-configuration
+# Force non-interactive mode
+export DEBIAN_FRONTEND=noninteractive
+
+sudo debconf-set-selections <<EOF
+keyboard-configuration keyboard-configuration/layoutcode string fr
+keyboard-configuration keyboard-configuration/modelcode string pc105
+keyboard-configuration keyboard-configuration/variantcode string
+keyboard-configuration keyboard-configuration/xkb-keymap select fr
+keyboard-configuration keyboard-configuration/layout select French
+keyboard-configuration keyboard-configuration/variant select Français
+EOF
+
+sudo dpkg-reconfigure keyboard-configuration --frontend noninteractive
+
+sudo systemctl restart keyboard-setup.service
+sudo setupcon
 echo -e "${GREEN}[>] Reconfiguring Keyboard!${NC}"
 
 # Creating user
