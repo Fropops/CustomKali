@@ -70,28 +70,14 @@ sudo /usr/bin/vmhgfs-fuse .host:/Share /mnt/Share -o subtype=vmhgfs-fuse,allow_o
 sudo echo ".host:/Share /mnt/Share fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
 echo -e "${GREEN}[>] Share configured!${NC}"
 
-# Copying local install script
-echo -e "${YELLOW}[?] Copying install script...${NC}"
-sudo mkdir /home/$Username/Desktop
-sudo chown $Username /home/$Username/Desktop
-sudo chgrp $Username /home/$Username/Desktop
-sudo mv -f install-local.sh /home/$Username/Desktop/install.sh
-sudo chown $Username /home/$Username/Desktop/install.sh
-sudo chgrp $Username /home/$Username/Desktop/install.sh
-sudo chmod +x /home/$Username/Desktop/install.sh
-sudo mv -f profile.zip /home/$Username/Desktop/profile.zip
-sudo chown $Username /home/$Username/Desktop/profile.zip
-sudo chgrp $Username /home/$Username/Desktop/profile.zip
-echo -e "${GREEN}[>] Script(s) copied!${NC}"
-
 # Cleaning 
 echo -e "${YELLOW}[?] Cleaning...${NC}"
 sudo rm install.sh
 echo -e "${GREEN}[>] Cleaning done!${NC}"
 
 # End of the script, restart
-echo -e "${YELLOW}[?] Restarting in 5 sec...${NC}"
+echo -e "${YELLOW}[?] Restarting in 15 sec...${NC}"
 echo -e "${GREEN}[>] You can now log as $Username and complete the installation !${NC}"
-sleep 5
-echo "/sbin/shutdown -r now"
+sleep 15
+/sbin/shutdown -r now
 
