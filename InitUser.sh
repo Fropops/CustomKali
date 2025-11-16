@@ -58,6 +58,7 @@ sudo mkdir /home/$Username/konsole_logs
 sudo chown $Username /home/$Username/konsole_logs 
 sudo chgrp $Username /home/$Username/konsole_logs
 
+curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/zshrc" -o "zshrc"
 sudo mv -f zshrc /home/$Username/.zshrc
 sudo chown $Username /home/$Username/.zshrc 
 sudo chgrp $Username /home/$Username/.zshrc
