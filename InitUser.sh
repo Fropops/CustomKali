@@ -93,5 +93,5 @@ echo -e "${GREEN}[>] Cleaning done!${NC}"
 echo -e "${YELLOW}[?] Restarting in 5 sec...${NC}"
 echo -e "${GREEN}[>] You can now log as $Username and complete the installation !${NC}"
 sleep 5
-/sbin/shutdown -r now
+echo "/sbin/shutdown -r now"
 
