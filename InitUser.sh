@@ -45,7 +45,7 @@ sudo useradd -m $Username
 echo -e "[+] Setting password"
 echo $Password > ~/.password
 echo $Password >> ~/.password
-sudo passwd Fropops < ~/.password
+sudo passwd $Username < ~/.password
 sudo rm ~/.password
 echo -e "[+] Adding Groups"
 sudo usermod -aG kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer $Username
@@ -55,12 +55,12 @@ sudo sed -i "s\/home/$Username:/bin/sh\/home/$Username:/usr/bin/zsh\g" /etc/pass
 
 echo -e "[+] Customizing shell start file"
 sudo mkdir /home/$Username/konsole_logs
-sudo chown Fropops /home/$Username/konsole_logs 
-sudo chgrp Fropops /home/$Username/konsole_logs
+sudo chown $Username /home/$Username/konsole_logs 
+sudo chgrp $Username /home/$Username/konsole_logs
 
 sudo mv -f zshrc /home/$Username/.zshrc
-sudo chown Fropops /home/$Username/.zshrc 
-sudo chgrp Fropops /home/$Username/.zshrc
+sudo chown $Username /home/$Username/.zshrc 
+sudo chgrp $Username /home/$Username/.zshrc
 
 # Configure shared folder
 echo -e "${YELLOW}[?] Configuring Shared folder...${NC}"
@@ -72,15 +72,15 @@ echo -e "${GREEN}[>] Share configured!${NC}"
 # Copying local install script
 echo -e "${YELLOW}[?] Copying install script...${NC}"
 sudo mkdir /home/$Username/Desktop
-sudo chown Fropops /home/$Username/Desktop
-sudo chgrp Fropops /home/$Username/Desktop
+sudo chown $Username /home/$Username/Desktop
+sudo chgrp $Username /home/$Username/Desktop
 sudo mv -f install-local.sh /home/$Username/Desktop/install.sh
-sudo chown Fropops /home/$Username/Desktop/install.sh
-sudo chgrp Fropops /home/$Username/Desktop/install.sh
+sudo chown $Username /home/$Username/Desktop/install.sh
+sudo chgrp $Username /home/$Username/Desktop/install.sh
 sudo chmod +x /home/$Username/Desktop/install.sh
 sudo mv -f profile.zip /home/$Username/Desktop/profile.zip
-sudo chown Fropops /home/$Username/Desktop/profile.zip
-sudo chgrp Fropops /home/$Username/Desktop/profile.zip
+sudo chown $Username /home/$Username/Desktop/profile.zip
+sudo chgrp $Username /home/$Username/Desktop/profile.zip
 echo -e "${GREEN}[>] Script(s) copied!${NC}"
 
 # Cleaning 
