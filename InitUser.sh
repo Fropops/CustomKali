@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# Define color variables
+GREEN='\033[0;32m'  # Green color
+YELLOW='\033[1;33m' # Yellow color
+NC='\033[0m'        # No color (reset)
+
+
+if (( $# != 2 )); then
+    echo "usage: $0 UserName Password"
+    exit 0
+fi
+
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+
+Username=$1
+Password=$2
+
+
+# Setting up Keyboard
+echo -e "${YELLOW}[?] Reconfiguring Keyboard...${NC}"
+setxkbmap fr
+sudo dpkg-reconfigure keyboard-configuration
+echo -e "${GREEN}[>] Reconfiguring Keyboard!${NC}"
+
+# Creating user
+echo -e "${YELLOW}[?] Adding new user ${Username}..${NC}"
+echo -e "[+] Creating user"
+sudo useradd -m $Username
+echo -e "[+] Setting password"
+echo $Password > ~/.password
+echo $Password >> ~/.password
+sudo passwd Fropops < ~/.password
+sudo rm ~/.password
+echo -e "[+] Adding Groups"
+sudo usermod -aG kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer $Username
+
+echo -e "[+] Customizing shell"
+sudo sed -i "s\/home/$Username:/bin/sh\/home/$Username:/usr/bin/zsh\g" /etc/passwd
+
+echo -e "[+] Customizing shell start file"
+sudo mkdir /home/$Username/konsole_logs
+sudo chown Fropops /home/$Username/konsole_logs 
+sudo chgrp Fropops /home/$Username/konsole_logs
+
+sudo mv -f zshrc /home/$Username/.zshrc
+sudo chown Fropops /home/$Username/.zshrc 
+sudo chgrp Fropops /home/$Username/.zshrc
+
+# Configure shared folder
+echo -e "${YELLOW}[?] Configuring Shared folder...${NC}"
+sudo mkdir /mnt/Share
+sudo /usr/bin/vmhgfs-fuse .host:/Share /mnt/Share -o subtype=vmhgfs-fuse,allow_other 
+sudo echo ".host:/Share /mnt/Share fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
+echo -e "${GREEN}[>] Share configured!${NC}"
+
+# Copying local install script
+echo -e "${YELLOW}[?] Copying install script...${NC}"
+sudo mkdir /home/$Username/Desktop
+sudo chown Fropops /home/$Username/Desktop
+sudo chgrp Fropops /home/$Username/Desktop
+sudo mv -f install-local.sh /home/$Username/Desktop/install.sh
+sudo chown Fropops /home/$Username/Desktop/install.sh
+sudo chgrp Fropops /home/$Username/Desktop/install.sh
+sudo chmod +x /home/$Username/Desktop/install.sh
+sudo mv -f profile.zip /home/$Username/Desktop/profile.zip
+sudo chown Fropops /home/$Username/Desktop/profile.zip
+sudo chgrp Fropops /home/$Username/Desktop/profile.zip
+echo -e "${GREEN}[>] Script(s) copied!${NC}"
+
+# Cleaning 
+echo -e "${YELLOW}[?] Cleaning...${NC}"
+sudo rm install.sh
+echo -e "${GREEN}[>] Cleaning done!${NC}"
+
+# End of the script, restart
+echo -e "${YELLOW}[?] Restarting in 5 sec...${NC}"
+echo -e "${GREEN}[>] You can now log as $Username and complete the installation !${NC}"
+sleep 5
+/sbin/shutdown -r now
+
