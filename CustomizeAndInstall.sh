@@ -17,7 +17,7 @@ sudo apt-get -y install konsole
 sudo sed -i "s/Exec=exo-open --launch TerminalEmulator/Exec=konsole/g" /home/$USER/.config/xfce4/panel/launcher-7/*
 
 echo -e "[+] Updating Profiles"
-curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/profile.zip" -o "profile.zip.zip"
+curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/profile.zip" -o "profile.zip"
 unzip profile.zip
 mkdir /home/$USER/.local/share/konsole/
 mv *.profile /home/$USER/.local/share/konsole/
