@@ -19,23 +19,39 @@ Password=$2
 
 # Setting up Keyboard
 echo -e "${YELLOW}[?] Reconfiguring Keyboard...${NC}"
-setxkbmap fr
-# Force non-interactive mode
+# Force non-interactive
 export DEBIAN_FRONTEND=noninteractive
 
-sudo debconf-set-selections <<EOF
-keyboard-configuration keyboard-configuration/layoutcode string fr
-keyboard-configuration keyboard-configuration/modelcode string pc105
-keyboard-configuration keyboard-configuration/variantcode string
-keyboard-configuration keyboard-configuration/xkb-keymap select fr
-keyboard-configuration keyboard-configuration/layout select French
-keyboard-configuration keyboard-configuration/variant select Français
+echo "[*] Config TTY keyboard (console)..."
+cat <<EOF | debconf-set-selections
+keyboard-configuration  keyboard-configuration/layoutcode string fr
+keyboard-configuration  keyboard-configuration/modelcode  string pc105
+keyboard-configuration  keyboard-configuration/variant    select oss
+keyboard-configuration  keyboard-configuration/optionscode string
 EOF
 
-sudo dpkg-reconfigure keyboard-configuration --frontend noninteractive
+dpkg-reconfigure keyboard-configuration --frontend noninteractive
 
-sudo systemctl restart keyboard-setup.service
-sudo setupcon
+# TTY reload
+systemctl restart keyboard-setup.service || true
+
+echo "[*] Config X11 keyboard..."
+mkdir -p /etc/X11/xorg.conf.d
+
+cat <<EOF >/etc/X11/xorg.conf.d/00-keyboard.conf
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "fr"
+        Option "XkbModel" "pc105"
+        Option "XkbVariant" "oss"
+EndSection
+EOF
+
+echo "[*] Applying X11 keymap..."
+setxkbmap fr
+
+echo "[+] Keyboard set to French (TTY + X11). Logout or reboot to apply fully."
 echo -e "${GREEN}[>] Reconfiguring Keyboard!${NC}"
 
 # Creating user
