@@ -183,5 +183,5 @@ echo -e "${GREEN}[>] Programs installed!${NC}"
 echo -e "${YELLOW}[?] Restarting in 15 sec...${NC}"
 echo -e "${GREEN}[>] You can now log as $Username and complete the installation !${NC}"
 sleep 15
-/sbin/shutdown -r now
+echos "/sbin/shutdown -r now"
 
