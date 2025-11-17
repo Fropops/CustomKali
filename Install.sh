@@ -98,7 +98,11 @@ echo -e "[+] Installing Konsole"
 sudo apt-get update
 sudo apt-get -y install konsole
 #used to change the menu entry
-sudo sed -i "s/Exec=exo-open --launch TerminalEmulator/Exec=konsole/g" "/home/$Username/.config/xfce4/panel/launcher-7/*"
+mkdir /home/"$Username"/.config/xfce4/panel/launcher-7/
+cp /home/"$USER"/.config/xfce4/panel/launcher-7/* /home/"$Username"/.config/xfce4/panel/launcher-7/
+for f in /home/"$Username"/.config/xfce4/panel/launcher-7/*; do
+    sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "$f"
+done
 
 echo -e "[+] Updating Profiles"
 curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/profile.zip" -o "profile.zip"
