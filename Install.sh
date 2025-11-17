@@ -146,6 +146,26 @@ rm packages-microsoft-prod.deb
 sudo apt-get update
 sudo apt-get install -y dotnet-sdk-7.0
 
+# Install Rust
+echo -e "[+] Installing Rust"
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o rust-install.sh
+chmod +x rust-install.sh
+./rust-install.sh -y
+rm rust-install.sh
+~/.cargo/bin/rustup target add i686-pc-windows-gnu
+~/.cargo/bin/rustup target add x86_64-pc-windows-gnu
+
+# Install Donut
+echo -e "[+] Installing Donut"
+sudo chmod 777 /opt
+cd /opt
+git clone http://github.com/thewover/donut.git
+cd /opt/donut
+make
+
+echo -e "${GREEN}[>] Programs installed!${NC}"
+
+
 # End of the script, restart
 echo -e "${YELLOW}[?] Restarting in 15 sec...${NC}"
 echo -e "${GREEN}[>] You can now log as $Username and complete the installation !${NC}"
