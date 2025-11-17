@@ -98,8 +98,8 @@ echo -e "[+] Installing Konsole"
 sudo apt-get update
 sudo apt-get -y install konsole
 #used to change the menu entry
-mkdir /home/"$Username"/.config/xfce4/panel/launcher-7/
-cp /home/"$USER"/.config/xfce4/panel/launcher-7/* /home/"$Username"/.config/xfce4/panel/launcher-7/
+mkdir /home/"$Username"/.config/xfce4/
+cp -r /home/kali/.config/xfce4/* /home/"$Username"/.config/xfce4/
 for f in /home/"$Username"/.config/xfce4/panel/launcher-7/*; do
     sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "$f"
 done
@@ -123,6 +123,10 @@ echo "[*] Adding VS Code repository..."
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] \
 https://packages.microsoft.com/repos/vscode stable main" \
     | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+
+# Update package list
+echo "[*] Updating package list..."
+sudo apt update
 
 echo "[*] Installing VS Code..."
 sudo apt install -y code
