@@ -64,20 +64,23 @@ echo $Password >> ~/.password
 sudo passwd $Username < ~/.password
 sudo rm ~/.password
 echo -e "[+] Adding Groups"
-sudo usermod -aG kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer $Username
+old_user="kali"
+new_user="$Username"
+
+for grp in $(id -nG "$old_user"); do
+    sudo usermod -a -G "$grp" "$new_user"
+done
 
 echo -e "[+] Customizing shell"
 sudo sed -i "s\/home/$Username:/bin/sh\/home/$Username:/usr/bin/zsh\g" /etc/passwd
 
 echo -e "[+] Customizing shell start file"
 sudo mkdir /home/$Username/konsole_logs
-sudo chown $Username /home/$Username/konsole_logs 
-sudo chgrp $Username /home/$Username/konsole_logs
+sudo chown "$Username":"$Username" /home/$Username/konsole_logs 
 
 curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/zshrc" -o "zshrc"
 sudo mv -f zshrc /home/$Username/.zshrc
-sudo chown $Username /home/$Username/.zshrc 
-sudo chgrp $Username /home/$Username/.zshrc
+sudo chown "$Username":"$Username" /home/$Username/.zshrc 
 
 # Configure shared folder
 echo -e "${YELLOW}[?] Configuring Shared folder...${NC}"
@@ -95,7 +98,7 @@ echo -e "[+] Installing Konsole"
 sudo apt-get update
 sudo apt-get -y install konsole
 #used to change the menu entry
-sudo sed -i "s/Exec=exo-open --launch TerminalEmulator/Exec=konsole/g" /home/$Username/.config/xfce4/panel/launcher-7/*
+sudo sed -i "s/Exec=exo-open --launch TerminalEmulator/Exec=konsole/g" "/home/$Username/.config/xfce4/panel/launcher-7/*"
 
 echo -e "[+] Updating Profiles"
 curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/profile.zip" -o "profile.zip"
@@ -149,8 +152,12 @@ cd /opt/donut
 make
 
 # Install C3PO
+cd /home/"$Username"
 echo -e "[+] Installing C3PO"
 wget -qO- https://raw.githubusercontent.com/Fropops/C3PO/refs/heads/master/Install/install.sh | bash -s -- All
+
+sudo chown -R "$Username":"$Username" /home/"$Username"/C3PO
+
 
 echo -e "${GREEN}[>] Programs installed!${NC}"
 
