@@ -100,12 +100,8 @@ echo -e "${YELLOW}[?] Installing Programs...${NC}"
 echo -e "[+] Installing Konsole"
 sudo apt-get update
 sudo apt-get -y install konsole
-#used to change the menu entry
-cp -r /home/kali/.config/xfce4/panel/* /home/"$Username"/.config/xfce4/panel
-sudo chown -R "$Username":"$Username" /home/"$Username"/.config/xfce4/panel
-for f in /home/"$Username"/.config/xfce4/panel/launcher-7/*; do
-    sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "$f"
-done
+#replace terminal by konsole instance for new users (shortcut)
+sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "/usr/share/applications/xfce4-terminal-emulator.desktop"
 
 echo -e "[+] Updating Profiles"
 curl -L "https://github.com/Fropops/CustomKali/raw/refs/heads/main/profile.zip" -o "profile.zip"
@@ -170,7 +166,7 @@ make
 # Install C3PO
 cd /home/"$Username"
 echo -e "[+] Installing C3PO"
-wget -qO- https://raw.githubusercontent.com/Fropops/C3PO/refs/heads/master/Install/install.sh | bash -s -- All noRun
+wget -qO- https://raw.githubusercontent.com/Fropops/C3PO/refs/heads/master/Install/install.sh | bash -s -- All "" noRun
 
 sudo chown -R "$Username":"$Username" /home/"$Username"/C3PO
 
