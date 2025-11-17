@@ -88,6 +88,8 @@ echo -e "${GREEN}[>] Share configured!${NC}"
 
 
 echo -e "${YELLOW}[?] Installing Programs...${NC}"
+echo "[*] Updating package lists..."
+sudo apt update -y
 # Install Konsole
 echo -e "[+] Installing Konsole"
 sudo apt-get update
@@ -114,9 +116,6 @@ echo "[*] Adding VS Code repository..."
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] \
 https://packages.microsoft.com/repos/vscode stable main" \
     | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-
-echo "[*] Updating package lists..."
-sudo apt update -y
 
 echo "[*] Installing VS Code..."
 sudo apt install -y code
@@ -148,6 +147,10 @@ cd /opt
 git clone http://github.com/thewover/donut.git
 cd /opt/donut
 make
+
+# Install C3PO
+echo -e "[+] Installing C3PO"
+wget -qO- https://raw.githubusercontent.com/Fropops/C3PO/refs/heads/master/Install/install.sh | bash -s -- All
 
 echo -e "${GREEN}[>] Programs installed!${NC}"
 
