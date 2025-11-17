@@ -11,7 +11,8 @@ if (( $# != 2 )); then
     exit 0
 fi
 
-[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"ls -lat
+
 
 Username=$1
 Password=$2
@@ -101,6 +102,7 @@ sudo apt-get update
 sudo apt-get -y install konsole
 #used to change the menu entry
 cp -r /home/kali/.config/xfce4/panel/* /home/"$Username"/.config/xfce4/panel
+sudo chown -R "$Username":"$Username" /home/"$Username"/.config/xfce4/panel
 for f in /home/"$Username"/.config/xfce4/panel/launcher-7/*; do
     sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "$f"
 done
@@ -168,7 +170,7 @@ make
 # Install C3PO
 cd /home/"$Username"
 echo -e "[+] Installing C3PO"
-wget -qO- https://raw.githubusercontent.com/Fropops/C3PO/refs/heads/master/Install/install.sh | bash -s -- All
+wget -qO- https://raw.githubusercontent.com/Fropops/C3PO/refs/heads/master/Install/install.sh | bash -s -- All noRun
 
 sudo chown -R "$Username":"$Username" /home/"$Username"/C3PO
 

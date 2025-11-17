@@ -265,5 +265,5 @@ fi
 
 #custom aliases
 alias cme='crackmapexec'
-alias ts='cd /home/$USER/C3PO/TeamServer && ./TeamServer &'
-alias commander='cd /home/$USER/C3PO/Commander && ./Commander &'
+alias ts='cd /home/$USER/C3PO/TeamServer && sudo ./TeamServer &'
+alias commander='cd /home/$USER/C3PO/Commander && ./Commander'
