@@ -26,10 +26,24 @@ rm profile.zip
 
 # Install Visual Studio Code
 echo -e "[+] Installing  Visual Studio Code"
-curl -L -o vstudio.deb `curl -s https://code.visualstudio.com/docs/setup/linux | grep ".deb package (64-bit)" | grep -Eoi '<a [^>]+>' | grep -Eoi 'http[^"]+'`
-sudo apt install ./vstudio.deb
-rm vstudio.deb
-echo -e "${GREEN}[>] Programs installed!${NC}"
+echo "[*] Adding Microsoft GPG key..."
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc \
+    | gpg --dearmor \
+    | sudo tee /usr/share/keyrings/microsoft.gpg > /dev/null
+
+echo "[*] Adding VS Code repository..."
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] \
+https://packages.microsoft.com/repos/vscode stable main" \
+    | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+
+echo "[*] Updating package lists..."
+sudo apt update -y
+
+echo "[*] Installing VS Code..."
+sudo apt install -y code
+
+echo "[+] VS Code installed successfully!"
+
 
 # Install .Net
 echo -e "[+] Installing .Net"
@@ -56,9 +70,4 @@ git clone http://github.com/thewover/donut.git
 cd /opt/donut
 make
 
-cd $pwd
-
-# Cleaning 
-echo -e "${YELLOW}[?] Cleaning...${NC}"
-sudo rm install.sh
-echo -e "${GREEN}[>] Cleaning done!${NC}"
+echo -e "${GREEN}[>] Programs installed!${NC}"

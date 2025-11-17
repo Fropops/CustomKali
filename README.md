@@ -9,5 +9,5 @@ curl -fsSL https://github.com/Fropops/CustomKali/raw/refs/heads/main/InitUser.sh
 
 ##2 Step, after the Vm has restarted, logon with new created user and the execute the customze script : 
 ```
-curl -fsSL https://github.com/Fropops/CustomKali/raw/refs/heads/main/CustomizeAndInstall.sh | bash
+curl -fsSL https://github.com/Fropops/CustomKali/raw/refs/heads/main/CustomizeAndInstall.sh | sudo bash
 ```

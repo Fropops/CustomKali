@@ -86,11 +86,6 @@ sudo /usr/bin/vmhgfs-fuse .host:/Share /mnt/Share -o subtype=vmhgfs-fuse,allow_o
 sudo echo ".host:/Share /mnt/Share fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
 echo -e "${GREEN}[>] Share configured!${NC}"
 
-# Cleaning 
-echo -e "${YELLOW}[?] Cleaning...${NC}"
-sudo rm install.sh
-echo -e "${GREEN}[>] Cleaning done!${NC}"
-
 # End of the script, restart
 echo -e "${YELLOW}[?] Restarting in 15 sec...${NC}"
 echo -e "${GREEN}[>] You can now log as $Username and complete the installation !${NC}"
