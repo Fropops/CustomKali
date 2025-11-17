@@ -89,10 +89,12 @@ sudo /usr/bin/vmhgfs-fuse .host:/Share /mnt/Share -o subtype=vmhgfs-fuse,allow_o
 sudo echo ".host:/Share /mnt/Share fuse.vmhgfs-fuse defaults,allow_other 0 0" >> /etc/fstab
 echo -e "${GREEN}[>] Share configured!${NC}"
 
-
-echo -e "${YELLOW}[?] Installing Programs...${NC}"
+echo -e "${YELLOW}[?] Updating System...${NC}"
 echo "[*] Updating package lists..."
 sudo apt update -y
+
+
+echo -e "${YELLOW}[?] Installing Programs...${NC}"
 # Install Konsole
 echo -e "[+] Installing Konsole"
 sudo apt-get update
@@ -112,7 +114,7 @@ mv *.colorscheme /home/$Username/.local/share/konsole/
 rm profile.zip
 
 # Install Visual Studio Code
-echo -e "[+] Installing  jq
+echo -e "[+] Installing  jq"
 sudo apt update
 sudo apt install -y jq
 
