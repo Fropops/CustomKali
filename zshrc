@@ -265,5 +265,5 @@ fi
 
 #custom aliases
 alias cme='crackmapexec'
-alias ts='cd /mnt/Share/Projects/C3PO/TeamServer && dotnet run'
-alias commander='cd /mnt/Share/Projects/C3PO/Commander && dotnet run'
+alias ts='cd /home/$USER/C3PO/TeamServer && ./TeamServer &'
+alias commander='cd /home/$USER/C3PO/Commander && ./Commander &'
