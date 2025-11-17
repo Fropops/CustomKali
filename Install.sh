@@ -100,7 +100,7 @@ echo -e "[+] Installing Konsole"
 sudo apt-get update
 sudo apt-get -y install konsole
 #used to change the menu entry
-cp -r /home/kali/.config/xfce4/panel /home/"$Username"/.config/xfce4/panel
+cp -r /home/kali/.config/xfce4/panel/* /home/"$Username"/.config/xfce4/panel
 for f in /home/"$Username"/.config/xfce4/panel/launcher-7/*; do
     sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "$f"
 done
