@@ -98,8 +98,7 @@ echo -e "[+] Installing Konsole"
 sudo apt-get update
 sudo apt-get -y install konsole
 #used to change the menu entry
-mkdir /home/"$Username"/.config/xfce4/
-cp -r /home/kali/.config/xfce4/* /home/"$Username"/.config/xfce4/
+cp -r /home/kali/.config/xfce4/panel /home/"$Username"/.config/xfce4/panel
 for f in /home/"$Username"/.config/xfce4/panel/launcher-7/*; do
     sudo sed -i 's|Exec=exo-open --launch TerminalEmulator|Exec=konsole|g' "$f"
 done
@@ -111,6 +110,11 @@ mkdir /home/$Username/.local/share/konsole/
 mv *.profile /home/$Username/.local/share/konsole/
 mv *.colorscheme /home/$Username/.local/share/konsole/
 rm profile.zip
+
+# Install Visual Studio Code
+echo -e "[+] Installing  jq
+sudo apt update
+sudo apt install -y jq
 
 # Install Visual Studio Code
 echo -e "[+] Installing  Visual Studio Code"
