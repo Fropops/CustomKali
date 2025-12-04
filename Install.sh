@@ -144,7 +144,7 @@ wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 sudo apt-get update
-sudo apt-get install -y dotnet-sdk-7.0
+sudo apt-get install -y dotnet-sdk-8.0
 
 # Install Rust
 echo -e "[+] Installing Rust"
@@ -163,8 +163,13 @@ git clone http://github.com/thewover/donut.git
 cd /opt/donut
 make
 
-echo -e "${GREEN}[>] Programs installed!${NC}"
+echo -e "[+] Installing Python + Lief"
+cd /opt
+python3 -m venv pyenv
+/opt/pyenv/bin/pip install lief
 
+
+echo -e "${GREEN}[>] Programs installed!${NC}"
 
 # End of the script, restart
 echo -e "${YELLOW}[?] Restarting in 15 sec...${NC}"
